@@ -1,0 +1,66 @@
+<div container = "liquid-fluid">
+  <h1>Employee Enrollment Form </h1>
+
+  <form #userForm = "ngForm">
+   <!-- {{ userForm.value | json }}
+    <hr />
+    {{userModel | json}} -->
+
+  <div class= "form-group">
+    <label>Name</label>
+    <input type = "text" #name= "ngModel" required name="userName" [class.is-invalid]= "name.invalid && name.touched"
+    [(ngModel)]= "userModel.name" class="form-control">
+    <small class= "text-danger" [class.d-none]="name.valid || name.untouched">Name is required </small>
+  </div>
+
+  <div class= "form-group">
+    <label>Email</label>
+    <input type = "email" name="email" [(ngModel)]= "userModel.email" class="form-control">
+  </div>
+
+  <div class= "form-group">
+    <label>Mobile</label>
+    <input type = "tel" #mobile="ngModel" required pattern="^\d{10}$" name="mobile" [class.is-invalid]= "mobile.invalid && mobile.touched"
+     [(ngModel)]= "userModel.mobile" class="form-control">
+     <!-- <small class= "text-danger" [class.d-none]="mobile.valid || mobile.untouched">Mobile number is required and must be 10 digits</small> -->
+     <small class="text-danger" *ngIf="mobile.errors.required">Phone number is required</small>
+     <small class="text-danger" *ngIf="mobile.errors.pattern">Phone number must be 10 digits</small>
+  </div>
+
+  <div class= "form-group">
+    <label>Employee Number</label>
+    <input type = "number" #empNumber= "ngModel" name="empNumber" required [(ngModel)]= "userModel.empNumber" class="form-control">
+    <div *ngIf="mobile.errors && (mobile.invalid || mobile.touched)">
+    <small class= "text-danger" [class.d-none]="empNumber.valid || empNumber.untouched">Employee number is required </small>
+  </div>
+  </div>
+
+  <div class = "form-group">
+    <select class= "custom-select"  name= "topic" [(ngModel)]= "userModel.topic">
+      <option selected value="">I am interested in</option>
+      <option *ngFor= "let topic of topics">{{topic}}</option>
+    </select>
+  </div>
+
+  <div class= "mb-3">
+    <label>Session Preference</label>
+    <div class = "form-check">
+      <input class="form-check-input" [(ngModel)]= "userModel.timePreference" type="radio" name="timePreference" value="morning">
+      <label class= "form-check-label">Morning(9AM - 12PM)</label>
+    </div>
+
+    <div class = "form-check">
+      <input class="form-check-input" [(ngModel)]= "userModel.timePreference" type="radio" name="timePreference" value="afternoon">
+      <label class= "form-check-label">Afternoon(2AM - 5PM)</label>
+    </div>
+  </div>
+
+    <div class = "form-check mb-3">
+      <input class="form-check-input" [(ngModel)]= "userModel.subscribe" type="checkbox" name="subscribe">
+      <label class= "form-check-label">I agree to the terms and conditions</label>
+    </div>
+
+  <button class="btn btn-primary">Submit</button>
+  </form>
+  </div>
+
